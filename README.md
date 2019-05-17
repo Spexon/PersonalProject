@@ -1,5 +1,5 @@
 # PersonalProject
-Problem Statement: 
+Problem Statement: Ideally, my project would run bug free and have a well developed GUI with user-friendly features that will make me feel proud on what I've worked on. Realistically my program will have almost no bugs, with comments explaining what certain lines of code do, and keep the users intreagued for a while.
 
 Outline goals: 
 Use GUIs to create a game 
