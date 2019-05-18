@@ -6,9 +6,10 @@ Use GUIs to create a game
 Use java to build a game from scratch 
 
 Chart Boundaries: 
+limitations to OS
+Don't own a Raspberry Pi
 
 Success Criteria: 
-
 Minimal bugs 
 Be proud of what I have created 
 Learned about GUIs 
