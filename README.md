@@ -28,17 +28,21 @@ Potential future employers
 Timelines: 
 6 weeks 
 
-Detailed timeline 
-
-1) Do tutorials to learn about GUIs more, and get a Java project working. (2 hours)
+Week 1:
+Do tutorials to learn about GUIs more, and get a Java project working. (2 hours)
 So far I've learned that there are more tutorials for Java and it is a lot easier to get set up for a java project.
 
-2) Work on a kilobolt tutorial, see if it's what you want.http://www.kilobolt.com/game-development-tutorial.html Integrate your knowledge from the tutorial into code. 
+Week 2:
+Work on a kilobolt tutorial, see if it's what you want.http://www.kilobolt.com/game-development-tutorial.html Integrate your knowledge from the tutorial into code. 
 
-3) Work on unit 2, and integrate that information into your own project (Skip around to things that you dont know).
+Week 3:
+Work on unit 2, and integrate that information into your own project (Skip around to things that you dont know).
 
-4) Unit 3
+Week 4:
+Unit 3
 
+Week 5:
 5) Unit 4
 
+Week 6:
 6) Test program out, add necessary comments, javadocs, and spot bugs.
