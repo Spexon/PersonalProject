@@ -31,6 +31,7 @@ Timelines:
 Week 1:
 Do tutorials to learn about GUIs more, and get a Java project working. (2 hours)
 So far I've learned that there are more tutorials for Java and it is a lot easier to get set up for a java project.
+I've spend about an hour setting up and trying to figure out how to make eclipse work.
 
 Week 2:
 Work on a kilobolt tutorial, see if it's what you want.http://www.kilobolt.com/game-development-tutorial.html Integrate your knowledge from the tutorial into code. 
