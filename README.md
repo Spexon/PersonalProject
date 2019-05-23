@@ -29,9 +29,9 @@ Timelines:
 6 weeks 
 
 Week 1:
-Do tutorials to learn about GUIs more, and get a Java project working. (2 hours)
+Do tutorials to learn about GUIs more, and get a Java project working. (3 hours)
 So far I've learned that there are more tutorials for Java and it is a lot easier to get set up for a java project.
-I've spend about an hour setting up and trying to figure out how to make eclipse work.
+I've spend about an hour setting up and trying to figure out how to make eclipse work. Every javaFX program starts at the start() method, and needs to be extended from application for certain things to work. Typing ctrl + shift + o imports all required packages, when importing make sure to import javaFX items, and not awt or anything else. Can use grid.setGridLinesVisible(true) to see gridlines when debugging GUIs.
 
 Week 2:
 Work on a kilobolt tutorial, see if it's what you want.http://www.kilobolt.com/game-development-tutorial.html Integrate your knowledge from the tutorial into code. 
