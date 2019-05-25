@@ -43,7 +43,7 @@ Week 4:
 Unit 3
 
 Week 5:
-5) Unit 4
+Unit 4
 
 Week 6:
-6) Test program out, add necessary comments, javadocs, and spot bugs.
+Test program out, add necessary comments, javadocs, and spot bugs.
