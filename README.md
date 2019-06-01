@@ -38,13 +38,14 @@ Work on a kilobolt tutorial, see if it's what you want.http://www.kilobolt.com/g
 I've learned that you can call javaFX applications using javafx.application.Application.launch(className.class); In java, the origin is at the top left of a screen (0,0). When 'moving' a character through a game, you are actually scrolling the background and animating the character to make it look like he's moving. Stopped at Day 4: Figure 2-14.
 
 Week 3:
-Work on unit 2, and integrate that information into your own project (Skip around to things that you dont know).
+Work on unit 2, and integrate that information into your own project (Skip around to things that you dont know). (3 Hours)
+You can add your own images into a java project by making an image (in paint), and then setup the image by typing: character = getImage(base, "fileLocation/imageName.png"); When the application starts, the program's background will stay still until the user moves right with their keyboard, then the program scrolls to the left. When creating my background, I used variables, constructors with objects, update() method to allow movement, and getters/setters. Stopped at day 5: Getters and setters.
 
 Week 4:
-Unit 3
+Finish up unit 2
 
 Week 5:
-Unit 4
+Start unit 3, focus on basic level design.
 
 Week 6:
-Test program out, add necessary comments, javadocs, and spot bugs.
+Additional unit 3 tutorials, if necessary; go back and try to understand the code. Test program out, add necessary comments, javadocs, and spot bugs.
