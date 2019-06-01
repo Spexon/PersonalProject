@@ -4,7 +4,7 @@ import java.util.Scanner;
  * @author Vladimir Hardy
  * @Brief Main menu showing all the GUI tutorials I've completed
  */
-public class main {
+public class Main {
 
   public static void main(String[] args) {
     boolean restart = true;

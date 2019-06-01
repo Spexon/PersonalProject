@@ -2,42 +2,41 @@
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Frame;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.net.URL;
 
 public class SnakeStartingClass extends Applet implements Runnable, KeyListener {
-  private Image image;
-  private Graphics second;
-  
   private Snake snake;
+  private Image image, character;
+  private URL base;
+  private Graphics second;
   
   public void init() {
     setSize(800, 480);
     setBackground(Color.BLACK);
     setFocusable(true);
+    addKeyListener(this);
     Frame frame = (Frame) this.getParent().getParent();
     frame.setTitle("Snake");
-    addKeyListener(this);
+    try {
+      base = getDocumentBase();
+  } catch (Exception e) {
+      // TODO: handle exception
+  }
+  // Image Setups
+  character = getImage(base, "data/character.png");
   }
 
   public void start() {
+    snake = new Snake();
+    
     Thread thread = new Thread(this);
     thread.start();
-    snake = new Snake();
   }
-
-  public void update(Graphics g) {
-    // TODO Auto-generated method stub
-    super.update(g);
-  }
-
-  public void paint(Graphics g) {
-    // TODO Auto-generated method stub
-    super.paint(g);
-  }
-
+  
   public void stop() {
 
   }
@@ -48,6 +47,7 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
 
   public void run() {
     while (true) {
+      snake.update();
       repaint(); // this calls paint
 
       try {
@@ -58,6 +58,26 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
     }
 
   }
+
+  public void update(Graphics g) {
+    if (image == null) {
+      image = createImage(this.getWidth(), this.getHeight());
+      second = image.getGraphics();
+  }
+  second.setColor(getBackground());
+  second.fillRect(0, 0, getWidth(), getHeight());
+  second.setColor(getForeground());
+  paint(second);
+
+
+  g.drawImage(image, 0, 0, this);
+  }
+
+  public void paint(Graphics g) {
+    g.drawImage(character, snake.getCenterX() - 61, snake.getCenterY() - 63, this);
+  }
+
+  
 
   public void keyPressed(KeyEvent e) { //Will show only when debugging
     switch (e.getKeyCode()) {
@@ -70,15 +90,15 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
         break;
         
       case KeyEvent.VK_LEFT:
-        System.out.println("Moving Left");
+        snake.moveLeft();
         break;
 
       case KeyEvent.VK_RIGHT:
-        System.out.println("Moving right");
+        snake.moveRight();
         break;
 
       case KeyEvent.VK_SPACE:
-        System.out.println("Jumping");
+        snake.jump();
         break;
     }
 
@@ -95,11 +115,11 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
         break;
 
     case KeyEvent.VK_LEFT:
-        System.out.println("Stop moving left");
+        snake.stop();
         break;
 
     case KeyEvent.VK_RIGHT:
-        System.out.println("Stop moving right");
+        snake.stop();
         break;
 
     case KeyEvent.VK_SPACE:
