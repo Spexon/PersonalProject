@@ -24,11 +24,15 @@ Problem Statement: Ideally, my project would run bug free and have a well develo
 <ul>
   <li> Knowledge in GUIs </li>
 </ul>
+
 ## Assumptions: 
+
 <ul>
   <li> Everything working on time </li>
 </ul>
+
 ## Stakeholders: 
+
 <ul>
   <li> Professor </li>
   <li> Classmates </li>
