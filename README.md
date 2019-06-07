@@ -6,6 +6,7 @@ Problem Statement: Ideally, my project would run bug free and have a well develo
   <li> Use GUIs to create a game </li>
   <li> Use java to build a game from scratch </li>
 </ul>
+
 ## Chart Boundaries: 
 <ul>
   <li> limitations to OS </li>
