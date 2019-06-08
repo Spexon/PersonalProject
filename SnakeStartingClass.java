@@ -8,11 +8,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
 
+
 public class SnakeStartingClass extends Applet implements Runnable, KeyListener {
+  
   private Snake snake;
-  private Image image, character;
-  private URL base;
+  private Image image, currentSprite , character, characterUp, background;
   private Graphics second;
+  private URL base;
+  private static Background bg1, bg2;
   
   public void init() {
     setSize(800, 480);
@@ -28,9 +31,14 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
   }
   // Image Setups
   character = getImage(base, "data/character.png");
+  characterUp = getImage(base, "data/characterUp.png");
+  currentSprite = character;
+  background = getImage(base, "data/background.png");
   }
 
   public void start() {
+    bg1 = new Background(0, 0);
+    bg2 = new Background(2160, 0);
     snake = new Snake();
     
     Thread thread = new Thread(this);
@@ -48,6 +56,23 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
   public void run() {
     while (true) {
       snake.update();
+      if(snake.isUp()) {
+        currentSprite = characterUp;
+      }
+      else if (snake.isUp() == true && snake.isDown() == false && snake.isLeft() == false) {
+        currentSprite = characterUp;
+      }
+      else if (snake.isUp() == false && snake.isDown() == true && snake.isLeft() == false) {
+        //currentSprite = characterDown;
+      }
+      else if (snake.isUp() == false && snake.isDown() == false && snake.isLeft() == true) {
+        //currentSprite = characterLeft;
+      }
+      else {
+        currentSprite = character;
+      }
+      bg1.update();
+      bg2.update();
       repaint(); // this calls paint
 
       try {
@@ -64,29 +89,30 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
       image = createImage(this.getWidth(), this.getHeight());
       second = image.getGraphics();
   }
+    
   second.setColor(getBackground());
   second.fillRect(0, 0, getWidth(), getHeight());
   second.setColor(getForeground());
   paint(second);
 
-
   g.drawImage(image, 0, 0, this);
   }
 
   public void paint(Graphics g) {
-    g.drawImage(character, snake.getCenterX() - 61, snake.getCenterY() - 63, this);
+    g.drawImage(background, bg1.getBgX(), bg1.getBgY(), this);
+    g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
+    g.drawImage(currentSprite, snake.getCenterX() - 61, snake.getCenterY() - 63, this); 
   }
 
-  
-
+  //Change so that when user presses a key, all other directions will stop until another key is pressed
   public void keyPressed(KeyEvent e) { //Will show only when debugging
     switch (e.getKeyCode()) {
       case KeyEvent.VK_UP:
-        System.out.println("Moving Up");
+        snake.moveUp();
         break;
 
       case KeyEvent.VK_DOWN:
-        System.out.println("Moving Down");
+        snake.moveDown();
         break;
         
       case KeyEvent.VK_LEFT:
@@ -107,19 +133,21 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
   public void keyReleased(KeyEvent e) {
     switch (e.getKeyCode()) {
     case KeyEvent.VK_UP:
+        snake.stop();
         System.out.println("Stop moving up");
         break;
 
     case KeyEvent.VK_DOWN:
+        snake.stop();
         System.out.println("Stop moving down");
         break;
 
     case KeyEvent.VK_LEFT:
-        snake.stop();
+        //snake.stop();
         break;
 
     case KeyEvent.VK_RIGHT:
-        snake.stop();
+        //snake.stop();
         break;
 
     case KeyEvent.VK_SPACE:
