@@ -17,13 +17,13 @@ public class Snake {
     if (speedX < 0) {
       centerX += speedX;
     } else if (speedX == 0) {
-      //System.out.println("Do not scroll the background.");
+      // System.out.println("Do not scroll the background.");
 
     } else {
       if (centerX <= 684) {
         centerX += speedX;
       } else {
-       // System.out.println("Scroll Background Here");
+        // System.out.println("Scroll Background Here");
       }
     }
 
@@ -31,30 +31,44 @@ public class Snake {
 
     if (centerY + speedY >= 513) {
       centerY = 513;
-      up = true;
     } else {
       centerY += speedY;
-      up = false;
     }
-    
+
+    if (speedX > 0) {
+      up = false;
+      down = false;
+      left = false;
+    } else if (speedX < 0) {
+      up = false;
+      down = false;
+      left = true;
+    } else if (speedY > 0) {
+      up = false;
+      down = true;
+      left = false;
+    } else {
+      up = true;
+      down = false;
+      left = false;
+    }
 
     // Handles Jumping
     if (jumped == true) {
       speedY += 1;
-
       if (centerY + speedY >= 513) {
         centerY = 513;
         speedY = 0;
         jumped = false;
       }
     }
-    
+
     // Prevents going beyond Y coordinate of 0 (top)
     if (centerY + speedY <= 60) {
       centerY = 61;
       System.out.println("Dead");
     }
- // Prevents going beyond Y coordinate of  410 (bottom)
+    // Prevents going beyond Y coordinate of 410 (bottom)
     if (centerY + speedY >= 513) {
       System.out.println("Dead");
     }
@@ -71,14 +85,17 @@ public class Snake {
   }
 
   public boolean isUp() {
+
     return up;
   }
 
   public boolean isDown() {
+
     return down;
   }
 
   public boolean isLeft() {
+
     return left;
   }
 
@@ -101,17 +118,21 @@ public class Snake {
   public void moveLeft() {
     speedX = -4;
   }
-  
+
   public void moveUp() {
     speedY = -4;
   }
-  
+
   public void moveDown() {
     speedY = 4;
   }
 
-  public void stop() {
+  public void stopX() {
     speedX = 0;
+  }
+
+  public void stopY() {
+    speedY = 0;
   }
 
   public void jump() {
@@ -161,6 +182,6 @@ public class Snake {
   public void setSpeedY(int speedY) {
     this.speedY = speedY;
   }
-  
+
 }
 
