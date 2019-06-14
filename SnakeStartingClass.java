@@ -31,7 +31,7 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
       // TODO: handle exception
     }
     // Image Setups
-    character = getImage(base, "data/characterlink.png");
+    character = getImage(base, "data/character.png");
     characterUp = getImage(base, "data/characterUp.png");
     characterDown = getImage(base, "data/characterDown.png");
     characterLeft = getImage(base, "data/characterLeft.png");
@@ -78,6 +78,7 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
         e.printStackTrace();
       }
     }
+
   }
 
   public void update(Graphics g) {
@@ -98,13 +99,9 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
     g.drawImage(background, bg1.getBgX(), bg1.getBgY(), this);
     g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
     g.drawImage(currentSprite, snake.getCenterX() - 61, snake.getCenterY() - 63, this);
-    g.drawImage(currentSprite, snake.getCenterX() - 91, snake.getCenterY() - 63, this);
-    g.drawImage(currentSprite, snake.getCenterX() - 121, snake.getCenterY() - 63, this);
-    g.drawImage(currentSprite, snake.getCenterX() - 151, snake.getCenterY() - 63, this);
-    g.drawImage(currentSprite, snake.getCenterX() - 181, snake.getCenterY() - 63, this);
   }
 
-  public void keyPressed(KeyEvent e) {
+  public void keyPressed(KeyEvent e) { // Will show only when debugging
     switch (e.getKeyCode()) {
       case KeyEvent.VK_UP:
         snake.stopX();
