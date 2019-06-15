@@ -1,16 +1,18 @@
 
 public class Snake {
   // In Java, Class Variables should be private so that only its methods can change them.
+  private int x, y;
   private int centerX = 100;
   private int centerY = 382;
+  private int currentDirectionX = 61;
+  private int currentDirectionY = 61;
   private boolean up = false;
   private boolean down = false;
   private boolean left = false;
   private boolean jumped = false;
-
   private int speedX = 0;
   private int speedY = 1;
-
+  
   public void update() {
 
     // Moves Character or Scrolls Background accordingly.
@@ -20,7 +22,7 @@ public class Snake {
       // System.out.println("Do not scroll the background.");
 
     } else {
-      if (centerX <= 684) {
+      if (centerX <= 836) {
         centerX += speedX;
       } else {
         // System.out.println("Scroll Background Here");
@@ -29,25 +31,31 @@ public class Snake {
 
     // Updates Y Position
 
-    if (centerY + speedY >= 513) {
-      centerY = 513;
+    if (centerY + speedY >= 520) {
+      centerY = 520;
     } else {
       centerY += speedY;
     }
 
     if (speedX > 0) {
+      currentDirectionX = 61;
+      currentDirectionY = 63;
       up = false;
       down = false;
       left = false;
-    } else if (speedX < 0) {
+    } else if (speedX < 0) { 
+      currentDirectionX = 61;
+      currentDirectionY = 63;
       up = false;
       down = false;
       left = true;
     } else if (speedY > 0) {
+      currentDirectionY = 31;
       up = false;
       down = true;
       left = false;
     } else {
+      currentDirectionY = 91;
       up = true;
       down = false;
       left = false;
@@ -56,46 +64,68 @@ public class Snake {
     // Handles Jumping
     if (jumped == true) {
       speedY += 1;
-      if (centerY + speedY >= 513) {
-        centerY = 513;
+      if (centerY + speedY >= 518) {
+        centerY = 518;
         speedY = 0;
         jumped = false;
       }
     }
 
-    // Prevents going beyond Y coordinate of 0 (top)
-    if (centerY + speedY <= 60) {
-      centerY = 61;
+    // Prevents going beyond Y coordinate of 64 (top)
+    if (centerY + speedY <= 64) {
+      centerY = 65;
       System.out.println("Dead");
     }
-    // Prevents going beyond Y coordinate of 410 (bottom)
-    if (centerY + speedY >= 513) {
+    // Prevents going beyond Y coordinate of 520 (bottom)
+    if (centerY + speedY >= 520) {
+      centerY = 519;
       System.out.println("Dead");
     }
 
-    // Prevents going beyond X coordinate of 0 (left)
-    if (centerX + speedX <= 60) {
-      centerX = 61;
+    // Prevents going beyond X coordinate of 180 (left)
+    if (centerX + speedX <= 180) {
+      centerX = 181;
       System.out.println("Dead");
     }
-    // Prevents going beyond X coordinate of 676 (right)
-    if (centerX + speedX >= 684) {
+    // Prevents going beyond X coordinate of 832 (right)
+    if (centerX + speedX >= 832) {
+      centerX = 831;
       System.out.println("Dead");
     }
   }
 
-  public boolean isUp() {
+  public Snake(int x, int y) { //Constructor for Links of snake
+    centerX = x;
+    centerY = y;
+  }
+  
+  //Getters and Setters below:
+  
+  public int getX() {
+    return x;
+  }
 
+  public int getY() {
+    return y;
+  }
+
+  public void setX(int x) {
+    this.x = x;
+  }
+  
+  public void setY(int y) {
+    this.y = y;
+  }
+
+  public boolean isUp() {
     return up;
   }
 
   public boolean isDown() {
-
     return down;
   }
 
   public boolean isLeft() {
-
     return left;
   }
 
@@ -120,6 +150,7 @@ public class Snake {
   }
 
   public void moveUp() {
+    
     speedY = -4;
   }
 
@@ -142,6 +173,14 @@ public class Snake {
     }
 
   }
+  
+  public void setCurrentDirectionX(int currentDirectionX) {
+    this.currentDirectionX = currentDirectionX;
+  }
+  
+  public void setCurrentDirectionY(int currentDirectionY) {
+    this.currentDirectionX = currentDirectionY;
+  }
 
   public void setCenterX(int centerX) {
     this.centerX = centerX;
@@ -149,6 +188,14 @@ public class Snake {
 
   public void setCenterY(int centerY) {
     this.centerY = centerY;
+  }
+  
+  public int getCurrentDirectionX() {
+    return currentDirectionX;
+  }
+
+  public int getCurrentDirectionY() {
+    return currentDirectionY;
   }
 
   public int getCenterX() {
