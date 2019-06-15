@@ -61,7 +61,7 @@ You can add your own images into a java project by making an image (in paint), a
 Finish up unit 2. (5 Hours) As a general rule when creating a new object, you must create a class for the object, we must create objects using this class in startingClass, call the object's update() method within te run method, and paint the new object in the paint() method. Images are painted in the order they appear, similar to the layers in photoshop. If you have issues with getting your character/background to show up, right click the data folder and press refresh, or go to source/clean. Started to derail from the tutorial, adding my own features along the way. Added a feature where the character image will correspond with the direction the user moves, but is still pretty buggy.
 
 ## Week 5:
-Start unit 3, focus on basic level design.
+(4 hours) This week I began working more with my character's functionality, trying to make the snake one object that is used repetitively. I read through the tutorial for creating an enemy and will be using similar features discussed in the tutorial (making a new enemy class which will have other classes inherit from it). I created a constructor for the Snake class so that each link of the snake will have its own dimentions, and will be able to change relative to the direction it is travelling. Eventually new links will be created automatically after the user completes a certain task.
 
 ## Week 6:
 Additional unit 3 tutorials, if necessary; go back and try to understand the code. Test program out, add necessary comments, javadocs, and spot bugs.
