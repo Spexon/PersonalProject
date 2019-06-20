@@ -65,3 +65,10 @@ Finish up unit 2. (5 Hours) As a general rule when creating a new object, you mu
 
 ## Week 6:
 Additional unit 3 tutorials, if necessary; go back and try to understand the code. Test program out, add necessary comments, javadocs, and spot bugs.
+
+## Acknowledgements
+<ul>
+  <li> Janbodnar's tutorial http://zetcode.com/tutorials/javagamestutorial/snake/ (Available under 2-Clause BSD License: https://opensource.org/licenses/BSD-2-Clause) </li>
+  <li> James Cho: Kilobolt tutorial http://www.kilobolt.com/game-development-tutorial.html </li>
+</ul>
+   
