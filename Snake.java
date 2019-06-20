@@ -9,10 +9,15 @@ public class Snake {
   private boolean up = false;
   private boolean down = false;
   private boolean left = false;
+  private boolean right = true;
   private boolean jumped = false;
   private int speedX = 0;
   private int speedY = 1;
-  
+
+  /**
+   * @author Vladimir Hardy
+   * @brief updates and moves the snake.
+   */
   public void update() {
 
     // Moves Character or Scrolls Background accordingly.
@@ -37,70 +42,43 @@ public class Snake {
       centerY += speedY;
     }
 
+    // Stops all other movement when one arrow key is pressed
     if (speedX > 0) {
       currentDirectionX = 61;
       currentDirectionY = 63;
       up = false;
       down = false;
       left = false;
-    } else if (speedX < 0) { 
+      right = true;
+    } else if (speedX < 0) {
       currentDirectionX = 61;
       currentDirectionY = 63;
       up = false;
       down = false;
       left = true;
+      right = false;
     } else if (speedY > 0) {
       currentDirectionY = 31;
       up = false;
       down = true;
       left = false;
+      right = false;
     } else {
       currentDirectionY = 91;
       up = true;
       down = false;
       left = false;
-    }
-
-    // Handles Jumping
-    if (jumped == true) {
-      speedY += 1;
-      if (centerY + speedY >= 518) {
-        centerY = 518;
-        speedY = 0;
-        jumped = false;
-      }
-    }
-
-    // Prevents going beyond Y coordinate of 64 (top)
-    if (centerY + speedY <= 64) {
-      centerY = 65;
-      System.out.println("Dead");
-    }
-    // Prevents going beyond Y coordinate of 520 (bottom)
-    if (centerY + speedY >= 520) {
-      centerY = 519;
-      System.out.println("Dead");
-    }
-
-    // Prevents going beyond X coordinate of 180 (left)
-    if (centerX + speedX <= 180) {
-      centerX = 181;
-      System.out.println("Dead");
-    }
-    // Prevents going beyond X coordinate of 832 (right)
-    if (centerX + speedX >= 832) {
-      centerX = 831;
-      System.out.println("Dead");
+      right = false;
     }
   }
 
-  public Snake(int x, int y) { //Constructor for Links of snake
+  public Snake(int x, int y) { // Constructor for Links of snake
     centerX = x;
     centerY = y;
   }
-  
-  //Getters and Setters below:
-  
+
+  // Getters and Setters below:
+
   public int getX() {
     return x;
   }
@@ -112,7 +90,7 @@ public class Snake {
   public void setX(int x) {
     this.x = x;
   }
-  
+
   public void setY(int y) {
     this.y = y;
   }
@@ -127,6 +105,10 @@ public class Snake {
 
   public boolean isLeft() {
     return left;
+  }
+
+  public boolean isRight() {
+    return right;
   }
 
   public void setUp(boolean up) {
@@ -150,7 +132,7 @@ public class Snake {
   }
 
   public void moveUp() {
-    
+
     speedY = -4;
   }
 
@@ -173,11 +155,11 @@ public class Snake {
     }
 
   }
-  
+
   public void setCurrentDirectionX(int currentDirectionX) {
     this.currentDirectionX = currentDirectionX;
   }
-  
+
   public void setCurrentDirectionY(int currentDirectionY) {
     this.currentDirectionX = currentDirectionY;
   }
@@ -189,7 +171,7 @@ public class Snake {
   public void setCenterY(int centerY) {
     this.centerY = centerY;
   }
-  
+
   public int getCurrentDirectionX() {
     return currentDirectionX;
   }
