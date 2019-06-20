@@ -64,7 +64,7 @@ Finish up unit 2. (5 Hours) As a general rule when creating a new object, you mu
 (4 hours) This week I began working more with my character's functionality, trying to make the snake one object that is used repetitively. I read through the tutorial for creating an enemy and will be using similar features discussed in the tutorial (making a new enemy class which will have other classes inherit from it). I created a constructor for the Snake class so that each link of the snake will have its own dimentions, and will be able to change relative to the direction it is travelling. Eventually new links will be created automatically after the user completes a certain task.
 
 ## Week 6:
-Additional unit 3 tutorials, if necessary; go back and try to understand the code. Test program out, add necessary comments, javadocs, and spot bugs.
+(4 hours) Tested the program out, read thorugh my code to understand more about it, and added necessary comments, but have not started with spot bugs. Looked at a new tutorial on zetcode.com and tried to figure out how to get my snake to move the way I wanted it to. Worked on new images for the game and fixed some collision bugs with the borders of the game. Started working on collision with a new object called apple, where the snake will get larger after consuming it. 
 
 ## Acknowledgements
 <ul>
