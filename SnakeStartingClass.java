@@ -40,7 +40,7 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
     addKeyListener(this);
     Frame frame = (Frame) this.getParent().getParent();
     frame.setTitle("Snake");
-    dots = 5;
+    dots = 10;
     try {
       base = getDocumentBase();
     } catch (Exception e) {
@@ -57,7 +57,7 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
   }
 
   /**
-   * @brief starts the program
+   * @brief starts the program, initialized background
    */
   public void start() {
     bg1 = new Background(0, 0);
@@ -69,19 +69,12 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
     thread.start();
   }
 
-  public void stop() {
-
-  }
-
-  public void destroy() {
-
-  }
-
   /**
    * @brief First line that is read when program begins
    */
   public void run() {
-    while (true) {
+    boolean restart = false;
+    while (!restart) {
       move();
       if (!checkApple) {
         locateApple();
@@ -117,26 +110,28 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
   }
 
   /**
-   * @brief checks if snake collides with certain objects
+   * @brief checks if snake collides with certain objects, such as itself or the borders
    */
   private void checkCollision() {
 
-    // if(!((X[0] > (appleX-4)) || (X[0] < (appleX+4))) && Y[0] > (appleY-4) || (Y[0] < (appleY+4)))
-    // {
-    if (X[0] == appleX && Y[0] == appleY) {
+    //System.out.println(X[0] + " " + Y[0]);
+    if ((X[0] > (appleX - 25) && X[0] < (appleX + 25)) && 
+        (Y[0] > (appleY - 25) && Y[0] < (appleY + 25))) {
       checkApple = false;
-      dots++;
+      dots+=10;
       System.out.println("Apple Eaten!");
     }
 
     for (int z = dots; z > 0; z--) {
-      if ((z > dots) && (X[0] == X[z]) && (Y[0] == Y[z])) {
+      if ((X[0] == X[z]) && (Y[0] == Y[z])) {
         System.out.println("Hit itself");
+        stop();
+        destroy();
       }
 
-      if (Y[0] >= 454) { // Prevents going beyond Y coordinate of 460 (bottom)
+      if (Y[0] >= 460) { // Prevents going beyond Y coordinate of 460 (bottom)
         System.out.println("Dead");
-        Y[0] = 455;
+        Y[0] = 459;
       }
 
       if (Y[0] < 0) { // Prevents going beyond Y coordinate of 0 (top)
@@ -161,12 +156,8 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
    */
   public void locateApple() {
     Random rndNum = new Random();
-    appleX = rndNum.nextInt(790) + 1;
-    appleX2 = appleX + 4;
-    appleY = rndNum.nextInt(460) + 1;
-    appleY2 = appleY + 4;
-    System.out.println("X: " + appleX);
-    System.out.println("Y: " + appleY);
+    appleX = rndNum.nextInt(785) + 1;
+    appleY = rndNum.nextInt(455) + 1;
     checkApple = true;
   }
 
@@ -175,7 +166,7 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
    */
   private void move() {
 
-    for (int z = dots; z > 0; z--) {
+    for (int z = dots; z > 0; z--) { // X and Y position of snake
       X[z] = X[(z - 1)];
       Y[z] = Y[(z - 1)];
     }
@@ -196,6 +187,13 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
       Y[0] += LINKSIZE;
     }
   }
+  
+  public void stop(boolean restart) {
+    if(restart) {
+      System.out.println("Better luck next time!");
+    }
+    System.out.println("In here");
+  }
 
   /**
    * @brief paints background and snake at X and Y coordinates
@@ -204,7 +202,7 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
     g.drawImage(background, bg1.getBgX(), bg1.getBgY(), this);
     g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
     g.drawImage(apple, appleX, appleY, this);
-    for (int z = 0; z < LINKSIZE; z++) {
+    for (int z = 0; z < dots; z++) {
       if (z == 0) {
         g.drawImage(characterHead, X[z], Y[z], this);
 
