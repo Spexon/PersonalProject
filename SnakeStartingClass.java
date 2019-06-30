@@ -9,6 +9,13 @@ import java.net.URL;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import javax.swing.ImageIcon;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import java.awt.Toolkit;
 
 /**
@@ -18,17 +25,18 @@ import java.awt.Toolkit;
 
 public class SnakeStartingClass extends Applet implements Runnable, KeyListener {
 
-  private Snake snake, link1, link2;
-  private Image image, characterBody, background, characterHead, apple;
-  private final int LINKSIZE = 5, TOTALSIZE = 900;
+  private Snake link1, link2;
+  private Image image, characterBody, background, characterHead, apple, gameOver;
+  private final int LINKSPEED = 4, TOTALSIZE = 900;
   private final int X[] = new int[TOTALSIZE];
   private final int Y[] = new int[TOTALSIZE];
   private Graphics second;
   private URL base;
   private static Background bg1, bg2;
   private int dots;
-  public int appleX, appleX2, appleY, appleY2;
+  public int appleX, appleX2, appleY, appleY2, addScore;
   public boolean checkApple = false;
+  public boolean restart = false;
 
   /**
    * @brief Creates all necessary entities before program starts
@@ -41,6 +49,7 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
     Frame frame = (Frame) this.getParent().getParent();
     frame.setTitle("Snake");
     dots = 10;
+    addScore = 0;
     try {
       base = getDocumentBase();
     } catch (Exception e) {
@@ -53,6 +62,8 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
     characterHead = iih.getImage();
     ImageIcon iia = new ImageIcon("data/apple.png");
     apple = iia.getImage();
+    ImageIcon iig = new ImageIcon("data/gameOver.png");
+    gameOver = iig.getImage();
     background = getImage(base, "data/background.png");
   }
 
@@ -73,7 +84,7 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
    * @brief First line that is read when program begins
    */
   public void run() {
-    boolean restart = false;
+
     while (!restart) {
       move();
       if (!checkApple) {
@@ -92,6 +103,21 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
         e.printStackTrace();
       }
     }
+    GridPane grid = new GridPane();
+    grid.setAlignment(Pos.CENTER);
+    grid.setHgap(10);
+    grid.setVgap(10);
+    grid.setPadding(new Insets(25, 25, 25, 25));
+    Button btn = new Button("Restart");
+    final Text actiontarget = new Text();
+    grid.add(actiontarget, 1, 6);
+    btn.setOnAction(new EventHandler<ActionEvent>() {
+
+      public void handle(ActionEvent e) {
+        actiontarget.setFill(javafx.scene.paint.Color.BLACK);
+        actiontarget.setText("Sign in button pressed");
+      }
+    });
   }
 
   /**
@@ -113,20 +139,19 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
    * @brief checks if snake collides with certain objects, such as itself or the borders
    */
   private void checkCollision() {
-
-    //System.out.println(X[0] + " " + Y[0]);
-    if ((X[0] > (appleX - 25) && X[0] < (appleX + 25)) && 
-        (Y[0] > (appleY - 25) && Y[0] < (appleY + 25))) {
+    // System.out.println(X[0] + " " + Y[0]);
+    if ((X[0] > (appleX - 25) && X[0] < (appleX + 25))
+        && (Y[0] > (appleY - 25) && Y[0] < (appleY + 25))) {
+      score();
       checkApple = false;
-      dots+=10;
+      dots += 10;
       System.out.println("Apple Eaten!");
     }
 
     for (int z = dots; z > 0; z--) {
       if ((X[0] == X[z]) && (Y[0] == Y[z])) {
         System.out.println("Hit itself");
-        stop();
-        destroy();
+        restart = true;
       }
 
       if (Y[0] >= 460) { // Prevents going beyond Y coordinate of 460 (bottom)
@@ -165,34 +190,26 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
    * @brief moves the snake when a certain key is pressed
    */
   private void move() {
-
     for (int z = dots; z > 0; z--) { // X and Y position of snake
       X[z] = X[(z - 1)];
       Y[z] = Y[(z - 1)];
     }
 
     if (link1.isLeft()) {
-      X[0] -= LINKSIZE;
+      X[0] -= LINKSPEED;
     }
 
     if (link1.isRight()) {
-      X[0] += LINKSIZE;
+      X[0] += LINKSPEED;
     }
 
     if (link1.isUp()) {
-      Y[0] -= LINKSIZE;
+      Y[0] -= LINKSPEED;
     }
 
     if (link1.isDown()) {
-      Y[0] += LINKSIZE;
+      Y[0] += LINKSPEED;
     }
-  }
-  
-  public void stop(boolean restart) {
-    if(restart) {
-      System.out.println("Better luck next time!");
-    }
-    System.out.println("In here");
   }
 
   /**
@@ -212,6 +229,15 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
       }
     }
     Toolkit.getDefaultToolkit().sync();
+    if (restart) {
+      g.drawImage(gameOver, 120, 400, this);
+    }
+  }
+
+  public int score() {
+    addScore += 10;
+    System.out.println("Score:" + addScore);
+    return addScore;
   }
 
   /**
