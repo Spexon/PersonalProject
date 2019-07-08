@@ -1,14 +1,17 @@
 import java.applet.Applet;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -23,20 +26,20 @@ import java.awt.Toolkit;
  * @brief begins all the necessary processes for the program to launch
  */
 
-public class SnakeStartingClass extends Applet implements Runnable, KeyListener {
+public class SnakeStartingClass extends Applet implements Runnable, KeyListener, ActionListener {
 
   private Snake link1, link2;
-  private Image image, characterBody, background, characterHead, apple, gameOver;
+  private Image image, characterBody, background, characterHead, apple, gameOver, restartButton;
   private final int LINKSPEED = 4, TOTALSIZE = 900;
   private final int X[] = new int[TOTALSIZE];
   private final int Y[] = new int[TOTALSIZE];
   private Graphics second;
+  private JButton btn, easy, normal, hard;
   private URL base;
   private static Background bg1, bg2;
   private int dots;
   public int appleX, appleX2, appleY, appleY2, addScore;
-  public boolean checkApple = false;
-  public boolean restart = false;
+  public boolean checkApple, restart, startGame = false;
 
   /**
    * @brief Creates all necessary entities before program starts
@@ -48,6 +51,7 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
     addKeyListener(this);
     Frame frame = (Frame) this.getParent().getParent();
     frame.setTitle("Snake");
+    setLayout(new FlowLayout());
     dots = 10;
     addScore = 0;
     try {
@@ -64,7 +68,14 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
     apple = iia.getImage();
     ImageIcon iig = new ImageIcon("data/gameOver.png");
     gameOver = iig.getImage();
+    ImageIcon iir = new ImageIcon("data/restartButton.png");
+    restartButton = iir.getImage();
     background = getImage(base, "data/background.png");
+    btn = new JButton("Restart");
+    easy = new JButton("easy");
+    normal = new JButton("Normal");
+    hard = new JButton("Hard");
+    
   }
 
   /**
@@ -75,16 +86,20 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
     bg2 = new Background(2160, 0);
     link1 = new Snake(61, 63);
     link2 = new Snake(91, 63);
-
+    add(easy);
+    easy.setSize(100,50);
+    easy.setVisible(true);
+    easy.addActionListener(this);
     Thread thread = new Thread(this);
     thread.start();
+    
   }
 
   /**
    * @brief First line that is read when program begins
    */
   public void run() {
-
+    
     while (!restart) {
       move();
       if (!checkApple) {
@@ -103,23 +118,13 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
         e.printStackTrace();
       }
     }
-    GridPane grid = new GridPane();
-    grid.setAlignment(Pos.CENTER);
-    grid.setHgap(10);
-    grid.setVgap(10);
-    grid.setPadding(new Insets(25, 25, 25, 25));
-    Button btn = new Button("Restart");
-    final Text actiontarget = new Text();
-    grid.add(actiontarget, 1, 6);
-    btn.setOnAction(new EventHandler<ActionEvent>() {
-
-      public void handle(ActionEvent e) {
-        actiontarget.setFill(javafx.scene.paint.Color.BLACK);
-        actiontarget.setText("Sign in button pressed");
-      }
-    });
+    add(btn);
+    btn.setSize(100, 50);
+    btn.setVisible(true);
+    btn.addActionListener(this);
+    
   }
-
+  
   /**
    * @brief updates all necessary objects
    */
@@ -155,22 +160,18 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
       }
 
       if (Y[0] >= 460) { // Prevents going beyond Y coordinate of 460 (bottom)
-        System.out.println("Dead");
         Y[0] = 459;
       }
 
       if (Y[0] < 0) { // Prevents going beyond Y coordinate of 0 (top)
-        System.out.println("Dead");
         Y[0] = 1;
       }
 
       if (X[0] >= 775) { // Prevents going beyond X coordinate of 790 (right)
-        System.out.println("Dead");
         X[0] = 776;
       }
 
       if (X[0] < 0) { // Prevents going beyond X coordinate of 0 (left)
-        System.out.println("Dead");
         X[0] = 1;
       }
     }
@@ -225,7 +226,6 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
 
       } else {
         g.drawImage(characterBody, X[z], Y[z], this);
-
       }
     }
     Toolkit.getDefaultToolkit().sync();
@@ -244,31 +244,32 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
    * @brief sets certain values to true or false when key is pressed, and moves in said direction
    */
   public void keyPressed(KeyEvent e) {
-    switch (e.getKeyCode()) {
-      case KeyEvent.VK_UP:
-        link1.stopX();
-        link1.isUp();
-        link1.moveUp();
-        break;
+    startGame = true;
+      switch (e.getKeyCode()) {
+        case KeyEvent.VK_UP:
+          link1.stopX();
+          link1.isUp();
+          link1.moveUp();
+          break;
 
-      case KeyEvent.VK_DOWN:
-        link1.stopX();
-        link1.isDown();
-        link1.moveDown();
-        break;
+        case KeyEvent.VK_DOWN:
+          link1.stopX();
+          link1.isDown();
+          link1.moveDown();
+          break;
 
-      case KeyEvent.VK_LEFT:
-        link1.stopY();
-        link1.isLeft();
-        link1.moveLeft();
-        break;
+        case KeyEvent.VK_LEFT:                                
+          link1.stopY();
+          link1.isLeft();
+          link1.moveLeft();
+          break;
 
-      case KeyEvent.VK_RIGHT:
-        link1.stopY();
-        link1.moveRight();
-        break;
+        case KeyEvent.VK_RIGHT:
+          link1.stopY();
+          link1.moveRight();
+          break;
+      }
     }
-  }
 
   public void keyTyped(KeyEvent arg0) {
     // TODO Auto-generated method stub
@@ -278,5 +279,15 @@ public class SnakeStartingClass extends Applet implements Runnable, KeyListener 
   public void keyReleased(KeyEvent arg0) {
     // TODO Auto-generated method stub
 
+  }
+
+  public void actionPerformed(java.awt.event.ActionEvent e) {
+    restart = false;
+    startGame = true;
+    init();
+    start();
+    run();
+    System.out.println("Restarting... (Not working yet)");
+    
   }
 }
