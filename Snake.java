@@ -2,17 +2,10 @@
 public class Snake {
   // In Java, Class Variables should be private so that only its methods can change them.
   private int x, y;
-  private int centerX = 100;
-  private int centerY = 382;
-  private int currentDirectionX = 61;
-  private int currentDirectionY = 61;
-  private boolean up = false;
-  private boolean down = false;
-  private boolean left = false;
-  private boolean right = true;
-  private boolean jumped = false;
-  private int speedX = 0;
-  private int speedY = 1;
+  private int centerX = 100, centerY = 382;
+  private int currentDirectionX = 61, currentDirectionY = 61;
+  private boolean up = false, down = false, left = false, right = true, stopped = false;
+  private int speedX = 0, speedY = 1;
 
   /**
    * @author Vladimir Hardy
@@ -20,22 +13,7 @@ public class Snake {
    */
   public void update() {
 
-    // Moves Character or Scrolls Background accordingly.
-    if (speedX < 0) {
-      centerX += speedX;
-    } else if (speedX == 0) {
-      // System.out.println("Do not scroll the background.");
-
-    } else {
-      if (centerX <= 836) {
-        centerX += speedX;
-      } else {
-        // System.out.println("Scroll Background Here");
-      }
-    }
-
     // Updates Y Position
-
     if (centerY + speedY >= 520) {
       centerY = 520;
     } else {
@@ -50,6 +28,7 @@ public class Snake {
       down = false;
       left = false;
       right = true;
+      stopped = true;
     } else if (speedX < 0) {
       currentDirectionX = 61;
       currentDirectionY = 63;
@@ -57,18 +36,27 @@ public class Snake {
       down = false;
       left = true;
       right = false;
+      stopped = true;
     } else if (speedY > 0) {
       currentDirectionY = 31;
       up = false;
       down = true;
       left = false;
       right = false;
-    } else {
+      stopped = true;
+    } else if (speedY < 0){
       currentDirectionY = 91;
       up = true;
       down = false;
       left = false;
       right = false;
+      stopped = false;
+    } else {
+      up = false;
+      down = false;
+      left = false;
+      right = false;
+      stopped = true;
     }
   }
 
@@ -110,6 +98,10 @@ public class Snake {
   public boolean isRight() {
     return right;
   }
+  
+  public boolean isStopped() {
+    return stopped;
+  }
 
   public void setUp(boolean up) {
     this.up = up;
@@ -147,13 +139,10 @@ public class Snake {
   public void stopY() {
     speedY = 0;
   }
-
-  public void jump() {
-    if (jumped == false) {
-      speedY = -15;
-      jumped = true;
-    }
-
+  
+  public void stopped() {
+    speedX = 0;
+    speedY = 0;
   }
 
   public void setCurrentDirectionX(int currentDirectionX) {
@@ -188,20 +177,12 @@ public class Snake {
     return centerY;
   }
 
-  public boolean isJumped() {
-    return jumped;
-  }
-
   public int getSpeedX() {
     return speedX;
   }
 
   public int getSpeedY() {
     return speedY;
-  }
-
-  public void setJumped(boolean jumped) {
-    this.jumped = jumped;
   }
 
   public void setSpeedX(int speedX) {
